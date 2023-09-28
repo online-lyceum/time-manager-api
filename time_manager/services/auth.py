@@ -8,6 +8,7 @@ from passlib.context import CryptContext
 
 from time_manager import schemas
 from time_manager.db.base import settings
+from time_manager.db.tables import User
 from time_manager.services.base import BaseService, get_session
 from time_manager.services.user import UserService
 
@@ -54,7 +55,7 @@ class AuthService(BaseService):
         return encoded_jwt
 
     @classmethod
-    async def get_current_user(cls, token: str = Depends(oauth2_scheme), session=Depends(get_session)):
+    async def get_current_user(cls, token: str = Depends(oauth2_scheme), session=Depends(get_session)) -> User:
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",

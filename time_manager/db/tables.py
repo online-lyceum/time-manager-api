@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Date, ForeignKey, Integer, PrimaryKeyConstraint, String, Text
+from sqlalchemy import BigInteger
 
 from time_manager.db.base import Base
 
@@ -13,6 +14,12 @@ class User(Base):
     second_name = Column(String, nullable=False)
     job_title = Column(String, nullable=True)
     hour_payment = Column(Integer)
+
+
+class TgUser(Base):
+    __tablename__ = "tg_user"
+    id = Column(BigInteger, primary_key=True, index=True, nullable=False)
+    user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
 
 
 class Note(Base):
